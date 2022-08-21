@@ -1,4 +1,4 @@
-package router
+package server
 
 import (
 	"fmt"
@@ -10,28 +10,34 @@ import (
 )
 
 type (
-	router struct {
+	server struct {
 		e *echo.Echo
 	}
-	Router interface {
+	Server interface {
 		Serve()
 	}
 )
 
-var Container dject.Container
-
-func NewRouter(container dject.Container) Router {
-	Container = container
+func NewServer(container dject.Container) Server {
 	e := echo.New()
+	e.Use(func(next echo.HandlerFunc) echo.HandlerFunc {
+		return func(c echo.Context) error {
+			cc := &CustomContext{
+				c,
+				container,
+			}
+			return next(cc)
+		}
+	})
 	e.GET("/users", getUsers)
 	e.POST("/users", saveUser)
 	e.GET("/users/:id", getUser)
 	// e.PUT("/users/:id", updateUser)
 	// e.DELETE("/users/:id", deleteUser)
-	return &router{e}
+	return &server{e}
 }
 
-func (r *router) Serve() {
+func (r *server) Serve() {
 	addr := fmt.Sprintf(":%s", os.Getenv("PORT"))
 	if err := r.e.Start(addr); err != nil {
 		log.Fatal(err)

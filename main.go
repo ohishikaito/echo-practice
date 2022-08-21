@@ -4,7 +4,7 @@ import (
 	"log"
 
 	"github.com/ohishikaito/echo-practice/adapter/di"
-	"github.com/ohishikaito/echo-practice/adapter/router"
+	"github.com/ohishikaito/echo-practice/adapter/server"
 )
 
 func main() {
@@ -12,6 +12,6 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	r := router.NewRouter(container)
+	r := server.NewServer(container)
 	r.Serve()
 }

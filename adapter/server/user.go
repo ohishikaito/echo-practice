@@ -1,4 +1,4 @@
-package router
+package server
 
 import (
 	"fmt"
@@ -19,9 +19,9 @@ func getUsers(c echo.Context) error {
 	// 	return err
 	// }
 	// return c.JSON(200, users)
-
+	cc := c.(*CustomContext)
 	res := []*domain.User{}
-	if err := Container.Invoke(func(
+	if err := cc.Container.Invoke(func(
 		usecase usecase.UserUc,
 	) error {
 		rslt, err := usecase.GetUsers()
@@ -33,7 +33,7 @@ func getUsers(c echo.Context) error {
 	}); err != nil {
 		return err
 	}
-	return c.JSON(200, res)
+	return cc.JSON(200, res)
 }
 
 func saveUser(c echo.Context) error {
