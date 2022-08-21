@@ -1,4 +1,4 @@
-package server
+package serverCtx
 
 import (
 	"github.com/labstack/echo"
@@ -6,7 +6,7 @@ import (
 )
 
 type (
-	CustomContext struct {
+	ServerCtx struct {
 		echo.Context
 		dject.Container
 	}
