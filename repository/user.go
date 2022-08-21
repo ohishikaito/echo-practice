@@ -16,7 +16,7 @@ func NewUserRepo() UserRepo {
 func (r *userRepo) GetUsers() ([]*domain.User, error) {
 	users := []*domain.User{}
 	users = append(users, &domain.User{
-		Id:   2,
+		Id:   3,
 		Name: "name",
 	})
 	return users, nil

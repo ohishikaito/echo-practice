@@ -6,13 +6,9 @@ import (
 	"github.com/ohishikaito/echo-practice/usecase"
 )
 
-var Container dject.Container
-
 func CreateContainer() (dject.Container, error) {
 	container := dject.NewContainer()
-	Container = container
 
-	// user queries
 	if err := container.Register(repository.NewUserRepo); err != nil {
 		return nil, err
 	}
