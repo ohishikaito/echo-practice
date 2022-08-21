@@ -7,6 +7,8 @@ import (
 	"os"
 
 	"github.com/labstack/echo"
+	"github.com/ohishikaito/echo-practice/repository"
+	"github.com/ohishikaito/echo-practice/usecase"
 )
 
 func main() {
@@ -35,10 +37,13 @@ func getUser(c echo.Context) error {
 }
 
 func getUsers(c echo.Context) error {
-	// Get team and member from the query string
-	team := c.QueryParam("team")
-	member := c.QueryParam("member")
-	return c.String(http.StatusOK, "team:"+team+", member:"+member)
+	r := repository.NewUserRepo()
+	uc := usecase.NewUserUc(r)
+	users, err := uc.GetUsers()
+	if err != nil {
+		return err
+	}
+	return c.JSON(200, users)
 }
 
 func saveUser(c echo.Context) error {

@@ -1,0 +1,22 @@
+{
+  // ファイル保存時に自動save
+  "editor.formatOnSave": true,
+  // おすすめ拡張機能のDL
+  "extensions.ignoreRecommendations": false,
+  // VSCODEの「Go: Add Tags To Struct Fields」の設定
+  // struct内で↑のコマンドを叩くとfieldのjsonを自動生成できる
+  // https://tech.techtouch.jp/entry/vscode
+  "go.addTags": {
+    "tags": "json",
+    "options": "json=",
+    "promptForTags": false,
+    "transform": "snakecase"
+  },
+  // サブフォルダのgo modを認識させるように
+  "go.toolsEnvVars": {
+    "GO111MODULE": "on"
+  },
+  "gopls": {
+    "experimentalWorkspaceModule": true
+  }
+}
