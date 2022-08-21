@@ -3,7 +3,6 @@ package server
 import (
 	"fmt"
 	"log"
-	"os"
 
 	"github.com/labstack/echo"
 	"github.com/ohishikaito/echo-practice/adapter/serverCtx"
@@ -41,7 +40,7 @@ func NewServer(port string, container dject.Container) Server {
 }
 
 func (r *server) Serve() {
-	addr := fmt.Sprintf(":%s", os.Getenv("PORT"))
+	addr := fmt.Sprintf(":%s", r.port)
 	if err := r.e.Start(addr); err != nil {
 		log.Fatal(err)
 	}
