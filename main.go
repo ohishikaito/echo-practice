@@ -3,11 +3,13 @@ package main
 import (
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"os"
 
 	"github.com/labstack/echo"
-	"github.com/ohishikaito/echo-practice/repository"
+	"github.com/ohishikaito/echo-practice/adapter/di"
+	"github.com/ohishikaito/echo-practice/domain"
 	"github.com/ohishikaito/echo-practice/usecase"
 )
 
@@ -37,13 +39,32 @@ func getUser(c echo.Context) error {
 }
 
 func getUsers(c echo.Context) error {
-	r := repository.NewUserRepo()
-	uc := usecase.NewUserUc(r)
-	users, err := uc.GetUsers()
+	// r := repository.NewUserRepo()
+	// uc := usecase.NewUserUc(r)
+	// users, err := uc.GetUsers()
+	// if err != nil {
+	// 	return err
+	// }
+	// return c.JSON(200, users)
+
+	container, err := di.CreateContainer()
+	res := []*domain.User{}
 	if err != nil {
+		log.Fatal(err)
+	}
+	if err := container.Invoke(func(
+		usecase usecase.UserUc,
+	) error {
+		rslt, err := usecase.GetUsers()
+		if err != nil {
+			return err
+		}
+		res = rslt
+		return nil
+	}); err != nil {
 		return err
 	}
-	return c.JSON(200, users)
+	return c.JSON(200, res)
 }
 
 func saveUser(c echo.Context) error {
