@@ -5,6 +5,7 @@ import (
 
 	"github.com/ohishikaito/echo-practice/adapter/db"
 	"github.com/ohishikaito/echo-practice/adapter/env"
+	"github.com/ohishikaito/echo-practice/adapter/paypal"
 	"github.com/ohishikaito/echo-practice/dject"
 	"github.com/ohishikaito/echo-practice/repository"
 	"github.com/ohishikaito/echo-practice/usecase"
@@ -12,8 +13,13 @@ import (
 
 func CreateContainer(e env.Env, db db.DB) (dject.Container, error) {
 	container := dject.NewContainer()
+
 	envOpt := dject.RegisterOptions{Interfaces: []reflect.Type{reflect.TypeOf((*env.Env)(nil)).Elem()}}
 	if err := container.Register(e, envOpt); err != nil {
+		return nil, err
+	}
+	paypalOpt := dject.RegisterOptions{Interfaces: []reflect.Type{reflect.TypeOf((*paypal.PaypalClient)(nil)).Elem()}}
+	if err := container.Register(paypal.NewPaypalClient(e), paypalOpt); err != nil {
 		return nil, err
 	}
 

@@ -11,3 +11,8 @@ type (
 		dject.Container
 	}
 )
+
+// CastServerCtx は echo.Context を *ServerCtx に Cast します
+func CastServerCtx(c echo.Context) *ServerCtx {
+	return c.(*ServerCtx)
+}

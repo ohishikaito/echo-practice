@@ -8,16 +8,9 @@ import (
 )
 
 func GetUsers(c echo.Context) error {
-	// r := repository.NewUserRepo()
-	// uc := usecase.NewUserUc(r)
-	// users, err := uc.GetUsers()
-	// if err != nil {
-	// 	return err
-	// }
-	// return c.JSON(200, users)
-	cc := c.(*serverCtx.ServerCtx)
-	res := []*domain.User{}
-	if err := cc.Container.Invoke(func(
+	sc := serverCtx.CastServerCtx(c)
+	res := make([]*domain.User, 0)
+	if err := sc.Container.Invoke(func(
 		usecase usecase.UserUc,
 	) error {
 		rslt, err := usecase.GetUsers()
@@ -29,7 +22,19 @@ func GetUsers(c echo.Context) error {
 	}); err != nil {
 		return err
 	}
-	return cc.JSON(200, res)
+	return sc.JSON(200, res)
+}
+
+// GetUsers2 未使用関数です
+func GetUsers2(c echo.Context) error {
+	// r := repository.NewUserRepo()
+	// uc := usecase.NewUserUc(r)
+	// users, err := uc.GetUsers()
+	// if err != nil {
+	// 	return err
+	// }
+	// return c.JSON(200, users)
+	return nil
 }
 
 // func saveUser(c echo.Context) error {
