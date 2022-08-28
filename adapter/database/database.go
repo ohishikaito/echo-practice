@@ -1,11 +1,11 @@
-package db
+package database
 
 import (
 	"log"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
-	"github.com/ohishikaito/echo-practice/adapter/env"
+	"github.com/ohishikaito/echo-practice/adapter/environment"
 )
 
 type (
@@ -14,12 +14,12 @@ type (
 	}
 )
 
-func NewDB(e env.Env) DB {
-	dbUser := e.GetDBUser()
-	dbPassword := e.GetDBPassword()
-	dbHost := e.GetDBHost()
-	dbName := e.GetDBName()
-	dbOptions := e.GetDBOptions()
+func NewDB(env environment.Env) DB {
+	dbUser := env.GetDBUser()
+	dbPassword := env.GetDBPassword()
+	dbHost := env.GetDBHost()
+	dbName := env.GetDBName()
+	dbOptions := env.GetDBOptions()
 	databaseUrl := dbUser + ":" + dbPassword + "@" + dbHost + "/" + dbName + dbOptions
 
 	db, err := sqlx.Connect("mysql", databaseUrl)

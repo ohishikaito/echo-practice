@@ -3,8 +3,8 @@ package di
 import (
 	"reflect"
 
-	database "github.com/ohishikaito/echo-practice/adapter/db"
-	environment "github.com/ohishikaito/echo-practice/adapter/env"
+	"github.com/ohishikaito/echo-practice/adapter/database"
+	"github.com/ohishikaito/echo-practice/adapter/environment"
 	"github.com/ohishikaito/echo-practice/adapter/paypal"
 	"github.com/ohishikaito/echo-practice/dject"
 	"github.com/ohishikaito/echo-practice/repository"

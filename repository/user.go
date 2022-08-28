@@ -1,7 +1,7 @@
 package repository
 
 import (
-	database "github.com/ohishikaito/echo-practice/adapter/db"
+	"github.com/ohishikaito/echo-practice/adapter/database"
 	"github.com/ohishikaito/echo-practice/domain"
 )
 

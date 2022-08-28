@@ -1,17 +1,17 @@
 package paypal
 
 import (
-	"github.com/ohishikaito/echo-practice/adapter/env"
+	"github.com/ohishikaito/echo-practice/adapter/environment"
 )
 
 type (
 	paypalClient struct {
-		env env.Env
+		env environment.Env
 	}
 	PaypalClient interface{}
 )
 
-func NewPaypalClient(env env.Env) PaypalClient {
+func NewPaypalClient(env environment.Env) PaypalClient {
 	return &paypalClient{
 		env,
 	}
