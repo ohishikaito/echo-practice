@@ -11,7 +11,8 @@ import (
 
 func main() {
 	env := environment.NewEnv()
-	db := database.NewDB(env)
+	dbBuilder := database.NewDBConnectionBuilder(env)
+	db := database.NewDB(dbBuilder)
 	container, err := di.CreateContainer(env, db)
 	if err != nil {
 		log.Fatal(err)

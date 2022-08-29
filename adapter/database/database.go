@@ -12,17 +12,35 @@ type (
 	DB struct {
 		*sqlx.DB
 	}
+	dBConnectionBuilder struct {
+		dbUser      string
+		dbPassword  string
+		dbHost      string
+		dbName      string
+		dbOptions   string
+		databaseUrl string
+	}
 )
 
-func NewDB(env environment.Env) DB {
+func NewDBConnectionBuilder(env environment.Env) *dBConnectionBuilder {
 	dbUser := env.GetDBUser()
 	dbPassword := env.GetDBPassword()
 	dbHost := env.GetDBHost()
 	dbName := env.GetDBName()
 	dbOptions := env.GetDBOptions()
 	databaseUrl := dbUser + ":" + dbPassword + "@" + dbHost + "/" + dbName + dbOptions
+	return &dBConnectionBuilder{
+		dbUser,
+		dbPassword,
+		dbHost,
+		dbName,
+		dbOptions,
+		databaseUrl,
+	}
+}
 
-	db, err := sqlx.Connect("mysql", databaseUrl)
+func NewDB(dBConnectionBuilder *dBConnectionBuilder) DB {
+	db, err := sqlx.Connect("mysql", dBConnectionBuilder.databaseUrl)
 	if err != nil {
 		log.Fatal(err)
 	}
